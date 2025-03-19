@@ -1,0 +1,48 @@
+name: Prüfung M324
+on:
+  push:
+    branches:
+      - main
+jobs:
+  checkout:
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+  testing:
+    runs-on: ubuntu-22.04
+    needs: checkout
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Testing (echo)
+        run: echo "Testing successful"
+
+      
+
+  linting:
+    runs-on: ubuntu-22.04
+    needs: checkout
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Linting
+        run: next lint
+
+  deployment:
+    runs-on: ubuntu-22.04
+    needs: [checkout, testing, linting]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and deploy
+        run: echo "Deployment successful"
