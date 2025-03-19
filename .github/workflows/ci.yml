@@ -33,8 +33,8 @@ jobs:
         with:
           name: node_modules
 
-      - name: Testing (echo)
-        run: echo "Testing successful"
+      - name: Testing 
+        run: npm test
 
   linting:
     needs: setup
@@ -49,7 +49,7 @@ jobs:
           name: node_modules
 
       - name: Linting
-        run: run npm run lint
+        run: npm run lint
 
   deployment:
     needs: [setup, testing, linting]

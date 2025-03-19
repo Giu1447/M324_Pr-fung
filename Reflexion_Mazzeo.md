@@ -5,7 +5,7 @@
 Die Pipeline besteht aus vier Haupt-Jobs:
 
 - **setup:**  
-  Dieser Job klont das Repository, installiert die benötigten Abhängigkeiten mittels `npm install` und lädt das `node_modules`-Verzeichnis als Artifact hoch.  
+  Dieser Job klont das Repository, installiert die benötigten Abhängigkeiten mittels `npm install` und lädt das `node_modules`-Verzeichnis als Artifact hoch.
 
 - **testing:**  
   Nach erfolgreichem Abschluss des Setup-Jobs wird in diesem Job ein einfacher Testschritt ausgeführt (repräsentiert durch einen Echo-Befehl).  
