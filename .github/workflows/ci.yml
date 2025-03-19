@@ -50,22 +50,7 @@ jobs:
 
       - name: Linting
         run: next lint
-
-  build:
-    needs: [setup, testing, linting]
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download node_modules artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-
-      - name: Build
-        run: next build
-
+        
   deployment:
     needs: build
     runs-on: ubuntu-22.04
