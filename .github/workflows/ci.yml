@@ -1,48 +1,82 @@
 name: Prüfung M324
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  checkout:
-
+  setup:
     runs-on: ubuntu-22.04
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Upload node_modules artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          path: node_modules
 
   testing:
+    needs: setup
     runs-on: ubuntu-22.04
-    needs: checkout
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
 
       - name: Testing (echo)
         run: echo "Testing successful"
 
-      
-
   linting:
+    needs: setup
     runs-on: ubuntu-22.04
-    needs: checkout
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
 
       - name: Linting
         run: next lint
 
-  deployment:
+  build:
+    needs: [setup, testing, linting]
     runs-on: ubuntu-22.04
-    needs: [checkout, testing, linting]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
+
+      - name: Build
+        run: next build
+
+  deployment:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download node_modules artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
 
       - name: Build and deploy
         run: echo "Deployment successful"
