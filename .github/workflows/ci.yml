@@ -50,9 +50,9 @@ jobs:
 
       - name: Linting
         run: next lint
-        
+
   deployment:
-    needs: build
+    needs: [setup, testing, linting]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
