@@ -49,7 +49,7 @@ jobs:
           name: node_modules
 
       - name: Linting
-        run: echo "Linting successful"
+        run: run npm run lint
 
   deployment:
     needs: [setup, testing, linting]
